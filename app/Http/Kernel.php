@@ -29,4 +29,10 @@ class Kernel extends HttpKernel {
 		'guest' => 'App\Http\Middleware\RedirectIfAuthenticated',
 	];
 
+    public function bootstrap()
+    {
+        parent::bootstrap();
+
+        \Dotenv::required('FAKEVAR', ['bar']);
+    }
 }
