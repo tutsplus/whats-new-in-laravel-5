@@ -2,7 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Input;
+use App\Commands\CreatePost;
 use Cache;
 use Validator;
 
@@ -21,9 +21,9 @@ class PostsController extends Controller {
         return response()->view('post', compact('posts'));
     }
 
-    public function store()
+    public function store(Request $req)
     {
-        $input = Input::only('title', 'body');
+        $input = $req->only('title', 'body');
         $v     = Validator::make($input, [
             'title' => 'required|min:3',
             'body' => 'required',
@@ -33,9 +33,7 @@ class PostsController extends Controller {
             return redirect('/')->withErrors($v->errors());
         }
 
-        $posts   = Cache::get('posts', []);
-        $posts[] = $input;
-        Cache::put('posts', $posts, 5);
+        $this->dispatchFrom(CreatePost::class, $req);
 
         return redirect('/');
     }
