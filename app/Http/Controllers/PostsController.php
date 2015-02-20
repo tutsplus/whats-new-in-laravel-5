@@ -13,6 +13,7 @@ class PostsController extends Controller {
     public function __construct(Request $req)
     {
         $this->request = $req;
+        $this->middleware('weird');
     }
 
     public function index()

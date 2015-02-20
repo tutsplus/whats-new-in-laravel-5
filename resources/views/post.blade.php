@@ -3,6 +3,12 @@
 @section('content')
     <div class="container">
 
+        @if (isset($ffUser) && $ffUser)
+            <div class="alert alert-success">
+                Hello, Firefox User!
+            </div>
+        @endif
+
         <h3>Current Posts:</h3>
         <div class="well">
             @forelse ($posts as $post)
