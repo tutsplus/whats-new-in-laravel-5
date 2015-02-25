@@ -3,6 +3,12 @@
 @section('content')
     <div class="container">
 
+        @if (Session::has('success'))
+            <div class="alert alert-success">
+                {{ Session::get('success') }}
+            </div>
+        @endif
+
         <h3>Current Posts:</h3>
         <div class="well">
             @forelse ($posts as $post)

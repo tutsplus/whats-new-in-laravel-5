@@ -2,6 +2,8 @@
 
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use App\Events\PostWasCreated;
+use App\Handlers\Events\Celebrate;
 
 class EventServiceProvider extends ServiceProvider {
 
@@ -11,8 +13,7 @@ class EventServiceProvider extends ServiceProvider {
 	 * @var array
 	 */
 	protected $listen = [
-		'event.name' => [
-			'EventListener',
+		PostWasCreated::class => [
 		],
 	];
 
@@ -26,7 +27,7 @@ class EventServiceProvider extends ServiceProvider {
 	{
 		parent::boot($events);
 
-		//
+        $events->subscribe(Celebrate::class);
 	}
 
 }
