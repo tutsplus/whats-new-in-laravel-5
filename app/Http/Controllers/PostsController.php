@@ -2,11 +2,10 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Input;
-use Cache;
 use Validator;
 
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Cache\Repository as Cache;
 
 class PostsController extends Controller {
 
@@ -15,15 +14,15 @@ class PostsController extends Controller {
         $this->request = $req;
     }
 
-    public function index()
+    public function index(Cache $cache)
     {
-        $posts = Cache::get('posts', []);
+        $posts = $cache->get('posts', []);
         return response()->view('post', compact('posts'));
     }
 
-    public function store()
+    public function store(Cache $cache)
     {
-        $input = Input::only('title', 'body');
+        $input = $this->request->only('title', 'body');
         $v     = Validator::make($input, [
             'title' => 'required|min:3',
             'body' => 'required',
@@ -33,11 +32,11 @@ class PostsController extends Controller {
             return redirect('/')->withErrors($v->errors());
         }
 
-        $posts   = Cache::get('posts', []);
+        $posts   = $cache->get('posts', []);
         $posts[] = $input;
-        Cache::put('posts', $posts, 5);
+        $cache->put('posts', $posts, 5);
 
-        return redirect('/');
+        return $this->index($cache);
     }
 
 }

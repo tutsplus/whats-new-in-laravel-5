@@ -11,6 +11,8 @@
 |
 */
 
+App::bind('Illuminate\Contracts\Cache\Repository', 'App\MemoryCache');
+
 Route::get('/', 'PostsController@index');
 Route::post('/', 'PostsController@store');
 
