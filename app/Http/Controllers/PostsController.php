@@ -21,17 +21,9 @@ class PostsController extends Controller {
         return response()->view('post', compact('posts'));
     }
 
-    public function store()
+    public function store(Requests\StoreFormRequest $formReq)
     {
         $input = Input::only('title', 'body');
-        $v     = Validator::make($input, [
-            'title' => 'required|min:3',
-            'body' => 'required',
-        ]);
-
-        if ($v->fails()) {
-            return redirect('/')->withErrors($v->errors());
-        }
 
         $posts   = Cache::get('posts', []);
         $posts[] = $input;
