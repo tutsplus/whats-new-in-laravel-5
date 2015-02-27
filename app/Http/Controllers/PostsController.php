@@ -2,6 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Events\PostWasCreated;
 use Input;
 use Cache;
 use Validator;
@@ -36,6 +37,8 @@ class PostsController extends Controller {
         $posts   = Cache::get('posts', []);
         $posts[] = $input;
         Cache::put('posts', $posts, 5);
+
+        event(new PostWasCreated($input));
 
         return redirect('/');
     }
