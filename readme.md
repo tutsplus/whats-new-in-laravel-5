@@ -11,6 +11,5 @@ In this repository, you'll find a base Laravel 5 application.  To boot:
 - Use `git branch` to fetch a list of all available branches
 - Use `git checkout <tagname>` to checkout a branch at a given point in the app
 
-Take this course on Tuts+: ** Update with published URL ***
+Take this course on Tuts+: [What's New in Laravel 5?](https://code.tutsplus.com/courses/whats-new-in-laravel-5)
 
-**Available on Tuts+ March, 2015 **
